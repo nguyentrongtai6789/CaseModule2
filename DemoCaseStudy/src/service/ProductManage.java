@@ -2,6 +2,7 @@ package service;
 
 import io.IOFile;
 import model.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -15,28 +16,37 @@ public class ProductManage implements IOFile<Product>, IProductService {
     }
 
     public void displayProductByPriceDown() {
-        Collections.sort(productList);
-        System.out.println("Danh sách sản phẩm có giá từ cao xuống thấp như sau:");
-        System.out.printf("%-17s %-20s %-20s %-17s %-25s %-13s %-17s %-10s\n", "ID SẢN PHẨM", "TÊN", "HÃNG SẢN XUẤT", "GIÁ TIỀN",
-                "SỐ LƯỢNG TRONG KHO", "MÔ TẢ", "ID DANH MỤC", "TÊN DANH MỤC");
-        for (Product product : productList) {
-            System.out.printf("%s\n", product);
+        if (productList.isEmpty()) {
+            System.out.println("Danh sách sản phẩm trống. ");
+        } else {
+            Collections.sort(productList);
+            System.out.println("Danh sách sản phẩm có giá từ cao xuống thấp như sau:");
+            System.out.printf("%-17s %-20s %-20s %-17s %-25s %-13s %-17s %-10s\n", "ID SẢN PHẨM", "TÊN", "HÃNG SẢN XUẤT", "GIÁ TIỀN",
+                    "SỐ LƯỢNG TRONG KHO", "MÔ TẢ", "ID DANH MỤC", "TÊN DANH MỤC");
+            for (Product product : productList) {
+                System.out.printf("%s\n", product);
+            }
         }
     }
 
     public void displayProductByPriceUp() {
-        Collections.sort(productList, new Comparator<Product>() {
-            @Override
-            public int compare(Product o1, Product o2) {
-                return (int) (o1.getPrice() - o2.getPrice());
+        if (productList.isEmpty()) {
+            System.out.println("Danh sách sản phẩm trống.");
+        } else {
+            Collections.sort(productList, new Comparator<Product>() {
+                @Override
+                public int compare(Product o1, Product o2) {
+                    return (int) (o1.getPrice() - o2.getPrice());
+                }
+            });
+            System.out.println("Danh sách sản phẩm có giá từ thấp lên cao như sau:");
+            System.out.printf("%-17s %-20s %-20s %-17s %-25s %-13s %-17s %-10s\n", "ID SẢN PHẨM", "TÊN", "HÃNG SẢN XUẤT", "GIÁ TIỀN",
+                    "SỐ LƯỢNG TRONG KHO", "MÔ TẢ", "ID DANH MỤC", "TÊN DANH MỤC");
+            for (Product product : productList) {
+                System.out.printf("%s\n", product);
             }
-        });
-        System.out.println("Danh sách sản phẩm có giá từ thấp lên cao như sau:");
-        System.out.printf("%-17s %-20s %-20s %-17s %-25s %-13s %-17s %-10s\n", "ID SẢN PHẨM", "TÊN", "HÃNG SẢN XUẤT", "GIÁ TIỀN",
-                "SỐ LƯỢNG TRONG KHO", "MÔ TẢ", "ID DANH MỤC", "TÊN DANH MỤC");
-        for (Product product : productList) {
-            System.out.printf("%s\n", product);
         }
+
     }
 
     public void displayProductByCategory() {
@@ -173,6 +183,32 @@ public class ProductManage implements IOFile<Product>, IProductService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void writeToBillFile(List<Product> products) {
+        File file = new File("D:\\module2\\DemoCaseStudy\\src\\io\\BillFile");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(products);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Product> readToBillFile() {
+        File file = new File("D:\\module2\\DemoCaseStudy\\src\\io\\BillFile");
+        List<Product> productsInBill = new ArrayList<>();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            productsInBill = (List<Product>) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productsInBill;
     }
 
     @Override

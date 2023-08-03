@@ -14,17 +14,6 @@ public class Product implements Serializable, Comparable<Product> {
     private String description;
     private Category category;
 
-    public Product(String name, String manufacturer, double price, int quantity, String description, Category category) {
-        this.name = name;
-        this.manufacturer = manufacturer;
-        this.price = price;
-        this.quantity = quantity;
-        this.description = description;
-        this.id = idProduct;
-        this.category = category;
-        idProduct++;
-    }
-
     public Product() {
         this.id = idProduct;
         idProduct++;

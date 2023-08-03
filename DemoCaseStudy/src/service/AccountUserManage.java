@@ -1,11 +1,11 @@
-package model;
+package service;
 
 import io.IOFile;
+import model.AccountUser;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AccountUserManage implements IOFile<AccountUser> {
     private List<AccountUser> accountUserList = new ArrayList<>();
