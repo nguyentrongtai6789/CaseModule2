@@ -31,14 +31,9 @@ public class Login {
                 }
             }
             switch (choice) {
-                case 1:
-                    adminLogin();
-                    break;
-                case 2:
-                    userLogin();
-                    break;
-                case 0:
-                    System.exit(0);
+                case 1 -> adminLogin();
+                case 2 -> userLogin();
+                case 0 -> System.exit(0);
             }
         }
     }

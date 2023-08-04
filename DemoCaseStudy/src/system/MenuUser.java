@@ -37,7 +37,7 @@ public class MenuUser {
                 try {
                     choice = Integer.parseInt(scanner.nextLine());
                     if (choice != 0 && choice != 1 && choice != 2 && choice != 3 &&
-                            choice != 4 && choice != 5 && choice != 6 && choice != 7)
+                            choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice !=8)
                         throw new Exception("Lựa chọn không được hỗ trợ.");
                     break;
                 } catch (NumberFormatException e) {
@@ -53,6 +53,8 @@ public class MenuUser {
                 case 4 -> productManage.searchProductByName();
                 case 5 -> productManage.searchProductByPrice();
                 case 6 -> billManage.addProductToBill();
+                case 7 -> billManage.deleteProductInBill();
+                case 8 -> billManage.payBill();
             }
         } while (choice != 0);
     }
